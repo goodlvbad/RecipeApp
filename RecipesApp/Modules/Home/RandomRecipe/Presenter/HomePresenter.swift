@@ -44,7 +44,7 @@ final class HomePresenter: HomePresenterProtocol {
         let type = recipeModel.dishType
         
         if let url = URL(string: recipeModel.img) {
-            imageLoader.loadImage(from: url) {[weak self] img in
+            imageLoader.loadImage(from: url) { [weak self] img in
                 guard let self = self else { return }
                 self.homeView.setRecipeMinimalInfo(title: title, ready: ready, dishType: type, image: img)
             }

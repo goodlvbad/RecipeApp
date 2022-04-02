@@ -19,30 +19,31 @@ final class HomeViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        navigationItem.title = "Recipe of the day"
-        
-        print(presenter)
-        
-        presenter?.showRecipeMinimalInfo()
-        
+        configureNavigationBar()
         configureRecipeCard()
+        presenter?.showRecipeMinimalInfo()
     }
 }
 
 extension HomeViewController {
+    private func configureNavigationBar() {
+        let appearance = UINavigationBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationItem.title = "Recipe of the day"
+    }
+    
     private func configureRecipeCard() {
-        
         view.backgroundColor = .systemGroupedBackground
         
         view.addSubview(recipeCard)
         recipeCard.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            
             recipeCard.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 20),
             recipeCard.leadingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.leadingAnchor, constant: 20),
             recipeCard.trailingAnchor.constraint(equalTo: view.safeAreaLayoutGuide.trailingAnchor, constant: -20),
-            
         ])
     }
     

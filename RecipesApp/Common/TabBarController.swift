@@ -11,23 +11,28 @@ import UIKit
 final class TabBarController: UITabBarController {
     
     private let homeView = Builder.createHomeModule()
+    private let searchView = Builder.createSearchModule()
     
     private lazy var favorites = UINavigationController(rootViewController: FavoritesViewController())
-//    private lazy var home = UINavigationController(rootViewController: homeView)
-    private lazy var search = UINavigationController(rootViewController: SearchViewController())
     
     private lazy var controllers: [UIViewController] = [
         favorites,
         UINavigationController(rootViewController: homeView),
-        search
+        UINavigationController(rootViewController: searchView),
     ]
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let appearance = UITabBarAppearance()
+        appearance.configureWithOpaqueBackground()
+        tabBar.standardAppearance = appearance
+        tabBar.scrollEdgeAppearance = appearance
+        
         setViewControllers(controllers, animated: false)
         setupTabBar()
         setupTabBarItemsImages()
-        selectedIndex = 1
+        selectedIndex = 2
     }
 }
 

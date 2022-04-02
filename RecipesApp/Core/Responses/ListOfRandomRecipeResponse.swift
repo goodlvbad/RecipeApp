@@ -1,5 +1,5 @@
 //
-//  ListOfRecipeResponse.swift
+//  ListOfRandomRecipeResponse.swift
 //  RecipesApp
 //
 //  Created by Светлана Кривобородова on 31.03.2022.
@@ -7,6 +7,6 @@
 
 import Foundation
 
-struct ListOfRecipeResponse: Responsable {
+struct ListOfRandomRecipeResponse: Responsable {
     let recipes: [RandomRecipeRaw]
 }
