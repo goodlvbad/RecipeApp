@@ -51,7 +51,7 @@ final class SearchPresenter: SearchPresenterProtocol {
                 guard let self = self else { return }
                 if let error = error {
                     print(error)
-//                    self.mainView.setFailureSearchResult()
+                    self.mainView.setFailureSearchResult()
                 }
                 
                 if let resultArray = resultArray {
@@ -60,7 +60,7 @@ final class SearchPresenter: SearchPresenterProtocol {
             }
         } else {
             print("add nil handler of search string")
-//            self.mainView.setFailureSearchResult()
+            self.mainView.setFailureSearchResult()
         }
         
     }
@@ -82,25 +82,32 @@ extension SearchPresenter {
         }
     }
     
+#warning("обработка невалидного запроса!")
     private func prepareToShowData(from result: [RecipeRaw]) {
         recipes = []
-        var counter = 0
-        for raw in result {
-            var model = RecipeViewModel(id: raw.id, title: raw.title, image: nil)
-            if let url = URL(string: raw.image) {
-                imageLoader.loadImage(from: url) { [weak self] img in
-                    model.image = img
-                    self?.recipes.append(model)
+        shouldUpdateView = false
+        if result.count == 0 {
+            print("here")
+            return
+        } else {
+            var counter = 0
+            for raw in result {
+                var model = RecipeViewModel(id: raw.id, title: raw.title, image: nil)
+                if let url = URL(string: raw.image) {
+                    imageLoader.loadImage(from: url) { [weak self] img in
+                        model.image = img
+                        self?.recipes.append(model)
+                        counter += 1
+                        if counter == result.count - 1 {
+                            self?.shouldUpdateView = true
+                        }
+                    }
+                } else {
+                    recipes.append(model)
                     counter += 1
                     if counter == result.count - 1 {
-                        self?.shouldUpdateView = true
+                        shouldUpdateView = true
                     }
-                }
-            } else {
-                recipes.append(model)
-                counter += 1
-                if counter == result.count - 1 {
-                    shouldUpdateView = true
                 }
             }
         }

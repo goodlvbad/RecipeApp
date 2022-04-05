@@ -95,11 +95,19 @@ extension SearchViewController: UITableViewDataSource {
         return presenter?.recipes.count ?? 0
     }
     
+    #warning("обработка невалидного запроса! чтобы не крашнутся")
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! RecipeTableCell
-        let data = presenter?.recipes[indexPath.row]
-        cell.setupCell(titile: data?.title, image: data?.image)
-//        cell.setupCell(titile: data?.title, image: nil)
+        
+        if let isEmpty = presenter?.recipes.isEmpty {
+            if !isEmpty {
+                if let data = presenter?.recipes[indexPath.row] {
+                    cell.setupCell(titile: data.title, image: data.image)
+                }
+            }
+        } else {
+            cell.setupCell(titile: nil, image: nil)
+        }
         return cell
     }
     
@@ -118,15 +126,16 @@ extension SearchViewController: UITableViewDelegate {
 extension SearchViewController: SearchViewProtocol {
     
     func setSuccessSearchResult() {
+        print(presenter?.recipes)
         recipeTableView.reloadData()
     }
     
     func setFailureSearchResult() {
-        
+        print("setFailureSearchResult")
     }
     
     func setWaiting() {
-        
+        print("setWaiting")
     }
     
 }
