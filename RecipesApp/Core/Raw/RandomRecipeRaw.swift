@@ -25,14 +25,24 @@ struct Ingredients: Codable {
     let original: String
     let originalName: String
     let unit: String
-    let measures: [Measures]
+//    let amount: Int
+//    let measures: [Measures]
 }
 
-struct Measures: Codable {
-    let metric: [InternationalMetric]
-}
+//struct Measures: Codable {
+//    let us: [USMetric]
+//    let metric: [InternationalMetric]
+//}
+//
+//struct InternationalMetric: Codable {
+//    let amount: Float
+//    let unitShort: String
+//    let unitLong: String
+//}
+//
+//struct USMetric: Codable {
+//    let amount: Int
+//    let unitShort: String
+//    let unitLong: String
+//}
 
-struct InternationalMetric: Codable {
-    let amount: Double
-    let unitLong: String
-}

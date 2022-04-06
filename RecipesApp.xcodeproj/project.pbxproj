@@ -112,7 +112,6 @@
 			isa = PBXGroup;
 			children = (
 				E420A24227F79E220002CA74 /* RandomRecipe */,
-				E420A24B27F7A08A0002CA74 /* DetailedRecipe */,
 			);
 			path = Home;
 			sourceTree = "<group>";
@@ -233,29 +232,6 @@
 				E420A23B27F762730002CA74 /* Model */,
 			);
 			path = RandomRecipe;
-			sourceTree = "<group>";
-		};
-		E420A24927F79F8C0002CA74 /* View */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = View;
-			sourceTree = "<group>";
-		};
-		E420A24A27F7A07B0002CA74 /* Presenter */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Presenter;
-			sourceTree = "<group>";
-		};
-		E420A24B27F7A08A0002CA74 /* DetailedRecipe */ = {
-			isa = PBXGroup;
-			children = (
-				E420A24927F79F8C0002CA74 /* View */,
-				E420A24A27F7A07B0002CA74 /* Presenter */,
-			);
-			path = DetailedRecipe;
 			sourceTree = "<group>";
 		};
 		E46DDA2727F871BF0078E4FC /* View */ = {

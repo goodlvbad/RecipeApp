@@ -31,14 +31,18 @@ final class SearchViewController: UIViewController {
         return tableView
     }()
     
+    private lazy var activityIndicator: UIActivityIndicatorView = {
+        let indicator = UIActivityIndicatorView(style: .medium)
+        indicator.hidesWhenStopped = true
+        indicator.translatesAutoresizingMaskIntoConstraints = false
+        return indicator
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         configureNavigationBar()
         configureTableView()
-    }
-    
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        searchBar.endEditing(true)
+        configureGestureToHideKeyboard()
     }
 }
 
@@ -53,13 +57,29 @@ extension SearchViewController {
     
     private func configureTableView() {
         view.addSubview(recipeTableView)
+        recipeTableView.addSubview(activityIndicator)
         
         NSLayoutConstraint.activate([
             recipeTableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             recipeTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             recipeTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            recipeTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor)
+            recipeTableView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
+            
+            activityIndicator.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            activityIndicator.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 40),
         ])
+    }
+    
+    private func configureGestureToHideKeyboard() {
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(self.handleTap))
+        gestureRecognizer.numberOfTapsRequired = 1
+        gestureRecognizer.numberOfTouchesRequired = 1
+        recipeTableView.addGestureRecognizer(gestureRecognizer)
+    }
+    
+    @objc
+    private func handleTap() {
+        searchBar.resignFirstResponder()
     }
 }
 
@@ -95,7 +115,6 @@ extension SearchViewController: UITableViewDataSource {
         return presenter?.recipes.count ?? 0
     }
     
-    #warning("обработка невалидного запроса! чтобы не крашнутся")
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: cellId, for: indexPath) as! RecipeTableCell
         
@@ -126,16 +145,32 @@ extension SearchViewController: UITableViewDelegate {
 extension SearchViewController: SearchViewProtocol {
     
     func setSuccessSearchResult() {
-        print(presenter?.recipes)
+        activityIndicator.stopAnimating()
         recipeTableView.reloadData()
     }
     
     func setFailureSearchResult() {
-        print("setFailureSearchResult")
+        activityIndicator.stopAnimating()
+        let alert = UIAlertController(title: "Invalid query", message: "Try again", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
+            guard let self = self else { return }
+            self.searchBar.becomeFirstResponder()
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
     func setWaiting() {
-        print("setWaiting")
+        activityIndicator.startAnimating()
+    }
+    
+    func setEmptyResult() {
+        activityIndicator.stopAnimating()
+        let alert = UIAlertController(title: "Nothing found", message: "Try to refine your query", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
+            guard let self = self else { return }
+            self.searchBar.becomeFirstResponder()
+        }))
+        self.present(alert, animated: true, completion: nil)
     }
     
 }

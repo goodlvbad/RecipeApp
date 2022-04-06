@@ -32,7 +32,7 @@ final class TabBarController: UITabBarController {
         setViewControllers(controllers, animated: false)
         setupTabBar()
         setupTabBarItemsImages()
-        selectedIndex = 2
+        selectedIndex = 1
     }
 }
 
@@ -41,7 +41,7 @@ extension TabBarController {
         
         let arrayOfTitles = ["Favorites", "Home", "Search" ]
         
-        for counter in 0..<controllers.count{
+        for counter in 0..<controllers.count {
             controllers[counter].title = arrayOfTitles[counter]
         }
         
@@ -54,7 +54,7 @@ extension TabBarController {
         
         let arrayOfSystemImages = ["star.circle", "house.circle", "magnifyingglass.circle" ]
         
-        for counter in 0..<arrayOfSystemImages.count{
+        for counter in 0..<arrayOfSystemImages.count {
             items[counter].image = UIImage(systemName: arrayOfSystemImages[counter])
         }
     }

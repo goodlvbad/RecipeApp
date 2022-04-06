@@ -11,6 +11,7 @@ protocol SearchViewProtocol: AnyObject {
     func setSuccessSearchResult()
     func setFailureSearchResult()
     func setWaiting()
+    func setEmptyResult()
 }
 
 protocol SearchPresenterProtocol: AnyObject {
@@ -33,7 +34,21 @@ final class SearchPresenter: SearchPresenterProtocol {
             case true:
                 mainView.setSuccessSearchResult()
             case false:
-                mainView.setWaiting()
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.mainView.setWaiting()
+                }
+            }
+        }
+    }
+    
+    private var shouldShowEmptyResult: Bool = false {
+        didSet {
+            if shouldShowEmptyResult == true {
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.mainView.setEmptyResult()
+                }
             }
         }
     }
@@ -58,11 +73,7 @@ final class SearchPresenter: SearchPresenterProtocol {
                     self.prepareToShowData(from: resultArray)
                 }
             }
-        } else {
-            print("add nil handler of search string")
-            self.mainView.setFailureSearchResult()
         }
-        
     }
 }
 
@@ -73,7 +84,7 @@ extension SearchPresenter {
             var newString = ""
             for substring in array {
                 newString.append(contentsOf: substring)
-                newString.append("&")
+                newString.append("+")
             }
             newString.removeLast()
             return newString
@@ -82,12 +93,11 @@ extension SearchPresenter {
         }
     }
     
-#warning("обработка невалидного запроса!")
     private func prepareToShowData(from result: [RecipeRaw]) {
         recipes = []
         shouldUpdateView = false
         if result.count == 0 {
-            print("here")
+            shouldShowEmptyResult = true
             return
         } else {
             var counter = 0
