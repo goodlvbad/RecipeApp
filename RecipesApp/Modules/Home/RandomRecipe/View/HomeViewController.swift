@@ -8,8 +8,6 @@
 import Foundation
 import UIKit
 
-let img = "https://spoonacular.com/recipeImages/640117-556x370.jpg"
-
 final class HomeViewController: UIViewController {
 
     var presenter: HomePresenterProtocol?
@@ -53,7 +51,16 @@ extension HomeViewController {
 }
 
 extension HomeViewController: HomeViewProtocol {
-    func setRecipeMinimalInfo(title: String, ready: String?, dishType: [String], image: UIImage?) {
-        recipeCard.setRecipeMinimalInfo(title: title, ready: ready, dishType: dishType, image: image)
+
+    func setRecipeMinimalInfo(model: RandomRecipeCardModel?) {
+        if let model = model {
+            recipeCard.setRecipeMinimalInfo(title: model.title, ready: String(model.ready), dishType: model.dishType, image: model.img)
+        } else {
+            setErrorInfo()
+        }
+    }
+    
+    func setErrorInfo() {
+        print("show error info")
     }
 }

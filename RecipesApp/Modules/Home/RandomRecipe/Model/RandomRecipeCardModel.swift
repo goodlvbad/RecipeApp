@@ -6,10 +6,11 @@
 //
 
 import Foundation
+import UIKit
 
 struct RandomRecipeCardModel {
     let title: String
     let ready: Int
     let dishType: [String]
-    let img: String
+    var img: UIImage?
 }

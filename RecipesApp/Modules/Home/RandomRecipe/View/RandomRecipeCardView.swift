@@ -114,7 +114,7 @@ extension RandomRecipeCardView {
         if dishType.isEmpty {
             recipeDishType.text = ""
         } else {
-            recipeDishType.text = dishType[0] + ", " + dishType[1]
+            recipeDishType.text = dishType[0]
         }
     }
 }
