@@ -19,7 +19,7 @@ final class HomeViewController: UIViewController {
         
         configureNavigationBar()
         configureRecipeCard()
-        presenter?.showRecipeMinimalInfo()
+//        presenter?.showRecipeMinimalInfo()
     }
 }
 

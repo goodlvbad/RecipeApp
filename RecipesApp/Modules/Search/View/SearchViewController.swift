@@ -127,6 +127,10 @@ extension SearchViewController: UITableViewDataSource {
         } else {
             cell.setupCell(titile: nil, image: nil)
         }
+        cell.callbackForMoreButton = { [weak self] in
+            guard let self = self else { return }
+            self.presenter?.getDetailedRecipeInformation(from: indexPath.row)
+        }
         return cell
     }
     
@@ -135,21 +139,21 @@ extension SearchViewController: UITableViewDataSource {
 //MARK: - UITableViewDelegate
 extension SearchViewController: UITableViewDelegate {
     
-//    func tableView(_ tableView: UITableView, estimatedHeightForRowAt indexPath: IndexPath) -> CGFloat {
-//        return 100
-//    }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        print(indexPath.row)
+        presenter?.getDetailedRecipeInformation(from: indexPath.row)
+    }
 }
 
 //MARK: - SearchViewProtocol
 extension SearchViewController: SearchViewProtocol {
-    
-    func setSuccessSearchResult() {
+
+    func showSuccessSearchResult() {
         activityIndicator.stopAnimating()
         recipeTableView.reloadData()
     }
     
-    func setFailureSearchResult() {
+    func showFailureSearchResult() {
         activityIndicator.stopAnimating()
         let alert = UIAlertController(title: "Invalid query", message: "Try again", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
@@ -159,11 +163,11 @@ extension SearchViewController: SearchViewProtocol {
         self.present(alert, animated: true, completion: nil)
     }
     
-    func setWaiting() {
+    func showWaiting() {
         activityIndicator.startAnimating()
     }
     
-    func setEmptyResult() {
+    func showEmptyResult() {
         activityIndicator.stopAnimating()
         let alert = UIAlertController(title: "Nothing found", message: "Try to refine your query", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in
@@ -173,4 +177,7 @@ extension SearchViewController: SearchViewProtocol {
         self.present(alert, animated: true, completion: nil)
     }
     
+    func showDetailedRecipeInformation(_ view: UIViewController) {
+        navigationController?.pushViewController(view, animated: true)
+    }
 }

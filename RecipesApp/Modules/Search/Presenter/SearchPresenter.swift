@@ -6,18 +6,21 @@
 //
 
 import Foundation
+import UIKit
 
 protocol SearchViewProtocol: AnyObject {
-    func setSuccessSearchResult()
-    func setFailureSearchResult()
-    func setWaiting()
-    func setEmptyResult()
+    func showSuccessSearchResult()
+    func showFailureSearchResult()
+    func showWaiting()
+    func showEmptyResult()
+    func showDetailedRecipeInformation(_ view: UIViewController)
 }
 
 protocol SearchPresenterProtocol: AnyObject {
     init(view: SearchViewProtocol, imageLoader: ImageLoaderProtocol, networkService: RecipesServiceProtocol)
-    func searchResipe(query: String?)
     var recipes: [RecipeViewModel] { get }
+    func searchResipe(query: String?)
+    func getDetailedRecipeInformation(from index: Int)
 }
 
 final class SearchPresenter: SearchPresenterProtocol {
@@ -32,11 +35,14 @@ final class SearchPresenter: SearchPresenterProtocol {
         didSet {
             switch shouldUpdateView {
             case true:
-                mainView.setSuccessSearchResult()
+                DispatchQueue.main.async { [weak self] in
+                    guard let self = self else { return }
+                    self.mainView.showSuccessSearchResult()
+                }
             case false:
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
-                    self.mainView.setWaiting()
+                    self.mainView.showWaiting()
                 }
             }
         }
@@ -47,7 +53,7 @@ final class SearchPresenter: SearchPresenterProtocol {
             if shouldShowEmptyResult == true {
                 DispatchQueue.main.async { [weak self] in
                     guard let self = self else { return }
-                    self.mainView.setEmptyResult()
+                    self.mainView.showEmptyResult()
                 }
             }
         }
@@ -66,7 +72,7 @@ final class SearchPresenter: SearchPresenterProtocol {
                 guard let self = self else { return }
                 if let error = error {
                     print(error)
-                    self.mainView.setFailureSearchResult()
+                    self.mainView.showFailureSearchResult()
                 }
                 
                 if let resultArray = resultArray {
@@ -75,8 +81,16 @@ final class SearchPresenter: SearchPresenterProtocol {
             }
         }
     }
+    
+    func getDetailedRecipeInformation(from index: Int) {
+        let id = recipes[index].id
+        let image = recipes[index].image
+        let vc = Builder.createDetailedRecipeInfoModule(id, image)
+        mainView.showDetailedRecipeInformation(vc)
+    }
 }
 
+//MARK: - Private methods
 extension SearchPresenter {
     private func setAnotherSeparator(to string: String) -> String {
         if string.contains(" ") {

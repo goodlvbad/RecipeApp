@@ -56,6 +56,21 @@ final class RandomRecipeCardView: UIView {
         super.init(coder: coder)
         setupView()
     }
+    
+    func setRecipeMinimalInfo(title: String, ready: String?, dishType: [String], image: UIImage?) {
+        recipeTitle.text = title
+        recipeImageView.image = image
+        if let ready = ready {
+            recipeReadyTime.text = "Ready in minutes: " + ready
+        } else {
+            recipeReadyTime.text = ""
+        }
+        if dishType.isEmpty {
+            recipeDishType.text = ""
+        } else {
+            recipeDishType.text = dishType[0]
+        }
+    }
 }
 
 extension RandomRecipeCardView {
@@ -99,22 +114,5 @@ extension RandomRecipeCardView {
     @objc
     private func moreButtonTapped(_ sender: UIButton) {
 //        callbackForMoreButton
-    }
-}
-
-extension RandomRecipeCardView {
-    func setRecipeMinimalInfo(title: String, ready: String?, dishType: [String], image: UIImage?) {
-        recipeTitle.text = title
-        recipeImageView.image = image
-        if let ready = ready {
-            recipeReadyTime.text = "Ready in minutes: " + ready
-        } else {
-            recipeReadyTime.text = ""
-        }
-        if dishType.isEmpty {
-            recipeDishType.text = ""
-        } else {
-            recipeDishType.text = dishType[0]
-        }
     }
 }

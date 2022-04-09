@@ -10,6 +10,8 @@ import UIKit
 
 final class RecipeTableCell: UITableViewCell {
     
+    var callbackForMoreButton: (() -> Void)?
+
     private lazy var recipeTitle: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20, weight: .bold)
@@ -30,9 +32,21 @@ final class RecipeTableCell: UITableViewCell {
         return label
     }()
     
+    private lazy var moreButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("More", for: .normal)
+        button.setTitleColor(UIColor.black, for: .normal)
+        button.addTarget(self, action: #selector(moreButtonTapped(_:)), for: .touchUpInside)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.layer.cornerRadius = 12
+        button.layer.borderWidth = 0.4
+        button.layer.borderColor = UIColor.black.cgColor
+        return button
+    }()
+    
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-//        selectionStyle = .none
+        selectionStyle = .none
         configureCell()
     }
     
@@ -42,12 +56,7 @@ final class RecipeTableCell: UITableViewCell {
     
     func setupCell(titile: String?, image: UIImage?) {
         recipeTitle.text = titile
-        if image == nil {
-            recipeImageView.isHidden = true
-        } else {
-//            recipeImageView.isHidden = false
-            recipeImageView.image = image
-        }
+        recipeImageView.image = image
     }
 }
 
@@ -56,28 +65,29 @@ extension RecipeTableCell {
         contentView.addSubviews([
             recipeImageView,
             recipeTitle,
+            moreButton,
         ])
-        
-        let leadingConstraintWithImage = recipeTitle.leadingAnchor.constraint(equalTo: recipeImageView.trailingAnchor, constant: 10)
-        let leadingConstraintWithoutImage = recipeTitle.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20)
         
         NSLayoutConstraint.activate([
-            recipeImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+            recipeImageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 10),
             recipeImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 20),
-            recipeImageView.heightAnchor.constraint(equalToConstant: 60),
-            recipeImageView.widthAnchor.constraint(equalToConstant: 60),
-            recipeImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -20),
+            recipeImageView.heightAnchor.constraint(equalToConstant: 80),
+            recipeImageView.widthAnchor.constraint(equalToConstant: 80),
+            recipeImageView.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -10),
             
-//            recipeImageView.image == nil ? leadingConstraintWithoutImage: leadingConstraintWithImage,
-            leadingConstraintWithImage,
+            recipeTitle.leadingAnchor.constraint(equalTo: recipeImageView.trailingAnchor, constant: 10),
             recipeTitle.topAnchor.constraint(equalTo: recipeImageView.topAnchor),
             recipeTitle.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
-            recipeTitle.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -20),
 
-//            recipeCalories.topAnchor.constraint(equalTo: recipeTitle.bottomAnchor, constant: 10),
-//            recipeCalories.leadingAnchor.constraint(equalTo: recipeTitle.leadingAnchor),
-//            recipeCalories.trailingAnchor.constraint(equalTo: recipeTitle.trailingAnchor),
-//            recipeCalories.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -20),
+            moreButton.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -20),
+            moreButton.heightAnchor.constraint(equalToConstant: 25),
+            moreButton.widthAnchor.constraint(equalToConstant: 65),
+            moreButton.bottomAnchor.constraint(lessThanOrEqualTo: contentView.bottomAnchor, constant: -10),
         ])
+    }
+    
+    @objc
+    private func moreButtonTapped(_ sender: UIButton) {
+        callbackForMoreButton?()
     }
 }

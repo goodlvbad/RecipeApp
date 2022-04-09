@@ -46,8 +46,6 @@ extension NetworkCore: NetworkCoreProtocol {
                    (response as? HTTPURLResponse)?.statusCode == 200,
                    error == nil {
                     self.handleSuccsesDataResponse(data, comletion: comletion)
-                } else {
-                    print("add processing for error. with help NetworkError")
                 }
             })
         dataTask.resume()

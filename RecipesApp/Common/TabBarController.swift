@@ -32,7 +32,7 @@ final class TabBarController: UITabBarController {
         setViewControllers(controllers, animated: false)
         setupTabBar()
         setupTabBarItemsImages()
-        selectedIndex = 1
+        selectedIndex = 2
     }
 }
 

@@ -11,6 +11,7 @@ import UIKit
 protocol BuilderProtocol {
     static func createHomeModule() -> UIViewController
     static func createSearchModule() -> UIViewController
+    static func createDetailedRecipeInfoModule(_ id: Int, _ image: UIImage?) -> UIViewController
 }
 
 final class Builder: BuilderProtocol {
@@ -29,6 +30,15 @@ final class Builder: BuilderProtocol {
         let imageLoader = ImageLoader()
         let service = RecipesService()
         let presenter = SearchPresenter(view: view, imageLoader: imageLoader, networkService: service)
+        view.presenter = presenter
+        
+        return view
+    }
+    
+    static func createDetailedRecipeInfoModule(_ id: Int, _ image: UIImage?) -> UIViewController {
+        let view = RecipeInfoViewController()
+        let service = RecipesService()
+        let presenter = RecipeInfoPresenter(view: view, networkService: service, recipeId: id, dishImage: image)
         view.presenter = presenter
         
         return view
