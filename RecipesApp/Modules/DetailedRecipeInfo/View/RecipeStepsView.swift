@@ -22,6 +22,8 @@ final class RecipeStepsView: UIView {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20, weight: .medium)
         label.numberOfLines = 0
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.1
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -49,17 +51,21 @@ final class RecipeStepsView: UIView {
         setupView()
     }
     
-    func setRecipeInfo(title: String, text: String, ready: String, servings: String) {
+    func setRecipeInfo(title: String?, ready: String?, servings: String?, text: String?) {
         recipeTitle.text = title
         recipeInfo.text = text
-        recipeReadyTime.text = "Ready in minutes: " + ready
-        recipeServings.text = "Servings: " + servings
+        if let ready = ready {
+            recipeReadyTime.text = "Ready in minutes: " + ready
+        }
+        if let servings = servings {
+            recipeServings.text = "Servings: " + servings
+        }
     }
 }
 
 extension RecipeStepsView {
     private func setupView() {
-        backgroundColor = .red
+        backgroundColor = .systemBackground
         addSubviews([
             recipeTitle,
             recipeReadyTime,
@@ -84,8 +90,6 @@ extension RecipeStepsView {
             recipeInfo.trailingAnchor.constraint(equalTo: recipeTitle.trailingAnchor),
             recipeInfo.leadingAnchor.constraint(equalTo: recipeTitle.leadingAnchor),
             recipeInfo.bottomAnchor.constraint(lessThanOrEqualTo: bottomAnchor, constant: -10),
-            
-            
         ])
     }
 }

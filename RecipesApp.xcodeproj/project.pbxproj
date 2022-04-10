@@ -10,6 +10,8 @@
 		E417F6E22802019F001A436D /* RecipeInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E417F6E12802019F001A436D /* RecipeInfoViewController.swift */; };
 		E417F6E428022CC6001A436D /* RecipeStepsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E417F6E328022CC6001A436D /* RecipeStepsView.swift */; };
 		E417F6E628023036001A436D /* IngredientsTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E417F6E528023036001A436D /* IngredientsTableCell.swift */; };
+		E417F6E92802FED1001A436D /* RecipeInfoModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E417F6E82802FED1001A436D /* RecipeInfoModel.swift */; };
+		E417F6EB2802FEE9001A436D /* IngredientsModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = E417F6EA2802FEE9001A436D /* IngredientsModel.swift */; };
 		E420A20427F5C3A90002CA74 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E420A20327F5C3A90002CA74 /* AppDelegate.swift */; };
 		E420A20D27F5C3AD0002CA74 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E420A20C27F5C3AD0002CA74 /* Assets.xcassets */; };
 		E420A21027F5C3AD0002CA74 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E420A20E27F5C3AD0002CA74 /* LaunchScreen.storyboard */; };
@@ -41,6 +43,8 @@
 		E417F6E12802019F001A436D /* RecipeInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeInfoViewController.swift; sourceTree = "<group>"; };
 		E417F6E328022CC6001A436D /* RecipeStepsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeStepsView.swift; sourceTree = "<group>"; };
 		E417F6E528023036001A436D /* IngredientsTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsTableCell.swift; sourceTree = "<group>"; };
+		E417F6E82802FED1001A436D /* RecipeInfoModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeInfoModel.swift; sourceTree = "<group>"; };
+		E417F6EA2802FEE9001A436D /* IngredientsModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IngredientsModel.swift; sourceTree = "<group>"; };
 		E420A20027F5C3A90002CA74 /* RecipesApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecipesApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E420A20327F5C3A90002CA74 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E420A20C27F5C3AD0002CA74 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -89,6 +93,15 @@
 				E417F6E528023036001A436D /* IngredientsTableCell.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		E417F6E72802FEBB001A436D /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				E417F6E82802FED1001A436D /* RecipeInfoModel.swift */,
+				E417F6EA2802FEE9001A436D /* IngredientsModel.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		E420A1F727F5C3A90002CA74 = {
@@ -287,6 +300,7 @@
 		E46DDA8F2801FF2F0078E4FC /* DetailedRecipeInfo */ = {
 			isa = PBXGroup;
 			children = (
+				E417F6E72802FEBB001A436D /* Model */,
 				E417F6E02802018D001A436D /* View */,
 				E46DDA912801FF530078E4FC /* Presenter */,
 			);
@@ -377,9 +391,11 @@
 				E420A22F27F750490002CA74 /* RandomRecipeCardView.swift in Sources */,
 				E420A21E27F5C9A30002CA74 /* SearchViewController.swift in Sources */,
 				E417F6E628023036001A436D /* IngredientsTableCell.swift in Sources */,
+				E417F6E92802FED1001A436D /* RecipeInfoModel.swift in Sources */,
 				E420A22C27F6F9E90002CA74 /* ImageLoader.swift in Sources */,
 				E420A22427F5CCDF0002CA74 /* NetworkCore.swift in Sources */,
 				E46DDA8E2801FCFA0078E4FC /* RecipeInfoPresenter.swift in Sources */,
+				E417F6EB2802FEE9001A436D /* IngredientsModel.swift in Sources */,
 				E420A21C27F5C9940002CA74 /* HomeViewController.swift in Sources */,
 				E46DDA3127F8C0BC0078E4FC /* RecipeViewModel.swift in Sources */,
 				E46DDA2B27F876230078E4FC /* RecipeResponseResult.swift in Sources */,
