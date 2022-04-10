@@ -8,6 +8,8 @@
 import UIKit
 
 struct IngredientsModel {
+    let id: Int
+    let imageString: String
     var image: UIImage?
     let name: String
 }

@@ -14,5 +14,5 @@ struct RecipeInfoResponse: Codable, Responsable {
     let readyInMinutes: Int
     let servings: Int
     let dishTypes: [String]
-    let extendedIngredients: [Ingredients]
+    let extendedIngredients: [ExtendedIngredients]
 }

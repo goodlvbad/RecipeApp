@@ -31,8 +31,7 @@ extension NetworkCore: NetworkCoreProtocol {
     func request<Res: Responsable>(metadata: String, comletion: @escaping (Result<Res, NetworkError>) -> Void) {
         let urlRequest = URL(string: "\(urlString)/\(metadata)&apiKey=\(key)")
 
-        #warning("delete")
-        print("\(urlString)/\(metadata)&apiKey=\(key)")
+//        print("\(urlString)/\(metadata)&apiKey=\(key)")
         
         guard let url = urlRequest else {
             comletion(.failure(NetworkError.invalidURL))

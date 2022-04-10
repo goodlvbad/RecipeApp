@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="20086" systemVersion="21E230" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
+    <entity name="FavoriteRecipe" representedClassName="FavoriteRecipe" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="readyInMinutes" optional="YES" attributeType="String"/>
+        <attribute name="recipeInfo" optional="YES" attributeType="String"/>
+        <attribute name="titile" optional="YES" attributeType="String"/>
+        <relationship name="ingridients" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Ingridients" inverseName="recipe" inverseEntity="Ingridients"/>
+    </entity>
+    <entity name="Ingridients" representedClassName="Ingridients" syncable="YES">
+        <attribute name="id" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="image" optional="YES" attributeType="String"/>
+        <attribute name="info" optional="YES" attributeType="String"/>
+        <relationship name="recipe" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="FavoriteRecipe" inverseName="ingridients" inverseEntity="FavoriteRecipe"/>
+    </entity>
+    <elements>
+        <element name="FavoriteRecipe" positionX="-63" positionY="-18" width="128" height="119"/>
+        <element name="Ingridients" positionX="-54" positionY="27" width="128" height="89"/>
+    </elements>
+</model>

@@ -85,7 +85,7 @@ final class SearchPresenter: SearchPresenterProtocol {
     func getDetailedRecipeInformation(from index: Int) {
         let id = recipes[index].id
         let image = recipes[index].image
-        let vc = Builder.createDetailedRecipeInfoModule(id, image)
+        let vc = Builder.createDetailedRecipeInfoModule(id, image, false)
         mainView.showDetailedRecipeInformation(vc)
     }
 }

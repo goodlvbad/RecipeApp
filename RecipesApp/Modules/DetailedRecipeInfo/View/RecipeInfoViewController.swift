@@ -14,6 +14,11 @@ final class RecipeInfoViewController: UIViewController {
     
     private let cellId = "ingredientsCellId"
     
+    enum FavoriteButtonImage: String {
+        case unsaved = "suit.heart"
+        case saved = "suit.heart.fill"
+    }
+    
     private lazy var scrollView: UIScrollView = {
         let scrollView = UIScrollView()
         scrollView.backgroundColor = .systemBackground
@@ -40,11 +45,9 @@ final class RecipeInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         configureView()
-        
-        presenter?.getRecipeInfo()
-        presenter?.getRecipeInstructions()
+        configureNavigationBar()
+        presenter?.manageGettingInfo()
     }
     
     override func viewDidLayoutSubviews() {
@@ -59,6 +62,11 @@ final class RecipeInfoViewController: UIViewController {
 
 //MARK: - Private methods
 extension RecipeInfoViewController {
+    private func configureNavigationBar() {
+        let favoriteButton = UIBarButtonItem(image: UIImage(systemName: FavoriteButtonImage.unsaved.rawValue), style: .plain, target: self, action: #selector(didTapFavoriteButton))
+        navigationItem.rightBarButtonItem = favoriteButton
+    }
+    
     private func configureView() {
         view.addSubview(scrollView)
         scrollView.addSubviews([
@@ -67,10 +75,26 @@ extension RecipeInfoViewController {
             ingredientsTableView
         ])
     }
+    
+    @objc
+    private func didTapFavoriteButton() {
+        presenter?.manageSettingToFavorite()
+    }
 }
 
 //MARK: - RecipeInfoViewProtocol
 extension RecipeInfoViewController: RecipeInfoViewProtocol {
+    func changeFavoriteButton(saved: Bool) {
+        switch saved {
+        case true:
+            let img = UIImage(systemName: FavoriteButtonImage.saved.rawValue)
+            navigationItem.rightBarButtonItem?.image = img
+        case false:
+            let img = UIImage(systemName: FavoriteButtonImage.unsaved.rawValue)
+            navigationItem.rightBarButtonItem?.image = img
+        }
+    }
+    
     func showError() {
         let alert = UIAlertController(title: "Something goes wrong", message: "Try again later", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: { [weak self] _ in

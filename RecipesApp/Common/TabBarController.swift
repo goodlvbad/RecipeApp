@@ -10,14 +10,11 @@ import UIKit
 
 final class TabBarController: UITabBarController {
     
-//    private let homeView = Builder.createHomeModule()
+    private let favoritesView = Builder.createFavoritesModule()
     private let searchView = Builder.createSearchModule()
     
-    private lazy var favorites = UINavigationController(rootViewController: FavoritesViewController())
-    
     private lazy var controllers: [UIViewController] = [
-        favorites,
-//        UINavigationController(rootViewController: homeView),
+        UINavigationController(rootViewController: favoritesView),
         UINavigationController(rootViewController: searchView),
     ]
     
@@ -40,7 +37,6 @@ extension TabBarController {
     private func setupTabBar() {
         
         let arrayOfTitles = ["Favorites",
-//                             "Home",
                              "Search" ]
         
         for counter in 0..<controllers.count {
@@ -55,7 +51,6 @@ extension TabBarController {
         guard let items = tabBar.items else { return }
         
         let arrayOfSystemImages = ["star.circle",
-//                                   "house.circle",
                                    "magnifyingglass.circle" ]
         
         for counter in 0..<arrayOfSystemImages.count {

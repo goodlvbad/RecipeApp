@@ -9,23 +9,12 @@ import Foundation
 import UIKit
 
 protocol BuilderProtocol {
-//    static func createHomeModule() -> UIViewController
     static func createSearchModule() -> UIViewController
-    static func createDetailedRecipeInfoModule(_ id: Int, _ image: UIImage?) -> UIViewController
+    static func createDetailedRecipeInfoModule(_ id: Int, _ image: UIImage?, _ isFavorite: Bool ) -> UIViewController
+    static func createFavoritesModule() -> UIViewController
 }
 
 final class Builder: BuilderProtocol {
-    
-//    static func createHomeModule() -> UIViewController {
-//        let view = HomeViewController()
-//        let imageLoader = ImageLoader()
-//        let service = RecipesService()
-//        let presenter = HomePresenter(view: view, imageLoader: imageLoader, networkService: service)
-//        view.presenter = presenter
-//
-//        return view
-//    }
-    
     static func createSearchModule() -> UIViewController {
         let view = SearchViewController()
         let imageLoader = ImageLoader()
@@ -36,14 +25,22 @@ final class Builder: BuilderProtocol {
         return view
     }
     
-    static func createDetailedRecipeInfoModule(_ id: Int, _ image: UIImage?) -> UIViewController {
+    static func createDetailedRecipeInfoModule(_ id: Int, _ image: UIImage?, _ isFavorite: Bool ) -> UIViewController {
         let view = RecipeInfoViewController()
         let service = RecipesService()
         let imageLoader = ImageLoader()
-        let presenter = RecipeInfoPresenter(view: view, networkService: service, imageLoader: imageLoader, recipeId: id, dishImage: image)
+        let presenter = RecipeInfoPresenter(view: view, networkService: service, imageLoader: imageLoader, recipeId: id, dishImage: image, isFavorite: isFavorite)
         view.presenter = presenter
         
         return view
     }
     
+    static func createFavoritesModule() -> UIViewController {
+        let view = FavoritesViewController()
+        let imageLoader = ImageLoader()
+        let presenter = FavoritesPresenter(view: view, imageLoader: imageLoader)
+        view.presenter = presenter
+        
+        return view
+    }
 }

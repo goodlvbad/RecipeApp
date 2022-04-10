@@ -11,6 +11,7 @@ import UIKit
 protocol RecipeInfoViewProtocol: AnyObject {
     func showRecipeInfo(title: String?, ready: String?, servings: String?, recipeInfo: String?)
     func showError()
+    func changeFavoriteButton(saved: Bool)
 }
 
 protocol RecipeInfoPresenterProtocol: AnyObject {
@@ -19,12 +20,14 @@ protocol RecipeInfoPresenterProtocol: AnyObject {
          networkService: RecipesServiceProtocol,
          imageLoader: ImageLoaderProtocol,
          recipeId: Int,
-         dishImage: UIImage?)
+         dishImage: UIImage?,
+         isFavorite: Bool)
     
     var dishImage: UIImage? { get }
     var ingredients: [IngredientsModel] { get }
-    func getRecipeInfo()
-    func getRecipeInstructions()
+    
+    func manageSettingToFavorite()
+    func manageGettingInfo()
 }
 
 final class RecipeInfoPresenter: RecipeInfoPresenterProtocol {
@@ -34,11 +37,16 @@ final class RecipeInfoPresenter: RecipeInfoPresenterProtocol {
     private let imageLoader: ImageLoaderProtocol
     
     private let recipeId: Int
+    private var isFavorite: Bool
+    
+    private var dishImageStr: String?
     
     var dishImage: UIImage?
     
     var ingredients: [IngredientsModel] = []
     var recipeInfoModel: RecipeInfoModel?
+    
+    var favoriteRecipe: FavoriteRecipe?
     
     private var shouldUpdateView: Bool = false {
         didSet {
@@ -58,16 +66,40 @@ final class RecipeInfoPresenter: RecipeInfoPresenterProtocol {
          networkService: RecipesServiceProtocol,
          imageLoader: ImageLoaderProtocol,
          recipeId: Int,
-         dishImage: UIImage?)
+         dishImage: UIImage?,
+         isFavorite: Bool)
     {
         self.view = view
         self.networkService = networkService
         self.imageLoader = imageLoader
         self.recipeId = recipeId
         self.dishImage = dishImage
+        self.isFavorite = isFavorite
     }
     
-    func getRecipeInfo() {
+    func manageSettingToFavorite() {
+        switch isFavorite {
+        case true:
+            removeRecipeFromFavorites()
+        case false:
+            saveRecipeToFavorites()
+        }
+    }
+    
+    func manageGettingInfo() {
+        switch isFavorite {
+        case true:
+            print("show info from coredata")
+        case false:
+            getRecipeInfo()
+            getRecipeInstructions()
+        }
+    }
+}
+
+//MARK: - Private methods
+extension RecipeInfoPresenter {
+    private func getRecipeInfo() {
         networkService.fetchRecipeInfo(id: recipeId) { [weak self] result, error in
             guard let self = self else { return }
             if let error = error {
@@ -77,6 +109,7 @@ final class RecipeInfoPresenter: RecipeInfoPresenterProtocol {
                 }
             }
             if let result = result {
+                self.dishImageStr = result.image
                 self.recipeInfoModel = RecipeInfoModel(title: result.title,
                                                        ready: String(result.readyInMinutes),
                                                        servings: String(result.servings),
@@ -86,7 +119,7 @@ final class RecipeInfoPresenter: RecipeInfoPresenterProtocol {
         }
     }
     
-    func getRecipeInstructions() {
+    private func getRecipeInstructions() {
         networkService.fetchRecipeAnalyzedInstructions(id: recipeId) { [weak self] result, error in
             guard let self = self else { return }
             if let error = error {
@@ -105,16 +138,13 @@ final class RecipeInfoPresenter: RecipeInfoPresenterProtocol {
             }
         }
     }
-}
 
-//MARK: - Private methods
-extension RecipeInfoPresenter {
-    private func prepareIngredientsData(from result: [Ingredients]) {
+    private func prepareIngredientsData(from result: [ExtendedIngredients]) {
         ingredients = []
         var counter = 0
         for raw in result {
-            var model = IngredientsModel(image: nil, name: raw.original)
             let urlStr = "https://spoonacular.com/cdn/ingredients_100x100/" + raw.image
+            var model = IngredientsModel(id: raw.id, imageString: urlStr, image: nil, name: raw.original)
             if let url = URL(string: urlStr) {
                 imageLoader.loadImage(from: url) { [weak self] img in
                     model.image = img
@@ -131,6 +161,54 @@ extension RecipeInfoPresenter {
                     shouldUpdateView = true
                 }
             }
+        }
+    }
+    
+    private func saveRecipeToFavorites() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        let newFavoriteRecipe = FavoriteRecipe(context: managedContext)
+        newFavoriteRecipe.id = Int64(recipeId)
+        newFavoriteRecipe.titile = recipeInfoModel?.title
+        newFavoriteRecipe.readyInMinutes = recipeInfoModel?.ready
+        newFavoriteRecipe.recipeInfo = recipeInfoModel?.recipeText
+        newFavoriteRecipe.image = dishImageStr
+        
+        var ingridientsArray = [Ingridients]()
+        
+        for ingridient in ingredients {
+            let newIngredient = Ingridients(context: managedContext)
+            newIngredient.info = ingridient.name
+            newIngredient.image = ingridient.imageString
+            newIngredient.id = Int64(ingridient.id)
+            ingridientsArray.append(newIngredient)
+        }
+        
+        newFavoriteRecipe.ingridients = NSSet(array: ingridientsArray)
+        
+        do {
+            try managedContext.save()
+            favoriteRecipe = newFavoriteRecipe
+            isFavorite = true
+            view.changeFavoriteButton(saved: true)
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
+        }
+    }
+    
+    private func removeRecipeFromFavorites() {
+        guard let favoriteRecipe = favoriteRecipe else { return }
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+        let managedContext = appDelegate.persistentContainer.viewContext
+        
+        managedContext.delete(favoriteRecipe)
+        do {
+            try managedContext.save()
+            isFavorite = false
+            view.changeFavoriteButton(saved: false)
+        } catch let error as NSError {
+            print("Could not save. \(error), \(error.userInfo)")
         }
     }
 }

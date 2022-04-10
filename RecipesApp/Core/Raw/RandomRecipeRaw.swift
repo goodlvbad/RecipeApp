@@ -14,10 +14,10 @@ struct RandomRecipeRaw: Codable {
     let readyInMinutes: Int
     let servings: Int
     let dishTypes: [String]
-    let extendedIngredients: [Ingredients]
+    let extendedIngredients: [ExtendedIngredients]
 }
 
-struct Ingredients: Codable {
+struct ExtendedIngredients: Codable {
     let id: Int
     let aisle: String
     let image: String
