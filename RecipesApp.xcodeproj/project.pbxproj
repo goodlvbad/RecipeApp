@@ -33,6 +33,9 @@
 		E420A22C27F6F9E90002CA74 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E420A22B27F6F9E90002CA74 /* ImageLoader.swift */; };
 		E420A23527F75BF70002CA74 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E420A23427F75BF70002CA74 /* UIView+Extension.swift */; };
 		E420A24127F76CBE0002CA74 /* Builder.swift in Sources */ = {isa = PBXBuildFile; fileRef = E420A24027F76CBE0002CA74 /* Builder.swift */; };
+		E43F610928773E8F00242491 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43F610828773E8F00242491 /* SplashViewController.swift */; };
+		E43F610B28773EC000242491 /* SplashPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43F610A28773EC000242491 /* SplashPresenter.swift */; };
+		E43F610D28773EDF00242491 /* SplashAnimator.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43F610C28773EDF00242491 /* SplashAnimator.swift */; };
 		E46DDA2627F865AD0078E4FC /* RecipeTableCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46DDA2527F865AD0078E4FC /* RecipeTableCell.swift */; };
 		E46DDA2927F871D80078E4FC /* SearchPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46DDA2827F871D80078E4FC /* SearchPresenter.swift */; };
 		E46DDA2B27F876230078E4FC /* RecipeResponseResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = E46DDA2A27F876230078E4FC /* RecipeResponseResult.swift */; };
@@ -72,6 +75,9 @@
 		E420A22B27F6F9E90002CA74 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		E420A23427F75BF70002CA74 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		E420A24027F76CBE0002CA74 /* Builder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Builder.swift; sourceTree = "<group>"; };
+		E43F610828773E8F00242491 /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
+		E43F610A28773EC000242491 /* SplashPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashPresenter.swift; sourceTree = "<group>"; };
+		E43F610C28773EDF00242491 /* SplashAnimator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashAnimator.swift; sourceTree = "<group>"; };
 		E46DDA2527F865AD0078E4FC /* RecipeTableCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeTableCell.swift; sourceTree = "<group>"; };
 		E46DDA2827F871D80078E4FC /* SearchPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchPresenter.swift; sourceTree = "<group>"; };
 		E46DDA2A27F876230078E4FC /* RecipeResponseResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecipeResponseResult.swift; sourceTree = "<group>"; };
@@ -169,11 +175,8 @@
 			isa = PBXGroup;
 			children = (
 				E417F71A280327D3001A436D /* CoreData */,
-				E420A20327F5C3A90002CA74 /* AppDelegate.swift */,
-				E420A20C27F5C3AD0002CA74 /* Assets.xcassets */,
-				E420A20E27F5C3AD0002CA74 /* LaunchScreen.storyboard */,
-				E420A21127F5C3AD0002CA74 /* Info.plist */,
-				E420A23F27F76CAA0002CA74 /* Common */,
+				E43F610728773DE300242491 /* Application */,
+				E43F610628773DC200242491 /* Resources */,
 				E420A23627F75C110002CA74 /* Helpers */,
 				E420A22227F5CC9D0002CA74 /* Modules */,
 				E420A22D27F7069F0002CA74 /* Core */,
@@ -205,6 +208,7 @@
 		E420A22227F5CC9D0002CA74 /* Modules */ = {
 			isa = PBXGroup;
 			children = (
+				E43F610528773D7D00242491 /* SplashScreen */,
 				E420A21F27F5CC7F0002CA74 /* Favorites */,
 				E420A22127F5CC920002CA74 /* Search */,
 				E46DDA8F2801FF2F0078E4FC /* DetailedRecipeInfo */,
@@ -275,6 +279,51 @@
 				E420A24027F76CBE0002CA74 /* Builder.swift */,
 			);
 			path = Common;
+			sourceTree = "<group>";
+		};
+		E43F610528773D7D00242491 /* SplashScreen */ = {
+			isa = PBXGroup;
+			children = (
+				E43F610F28773F0B00242491 /* View */,
+				E43F610E28773F0300242491 /* Presenter */,
+			);
+			path = SplashScreen;
+			sourceTree = "<group>";
+		};
+		E43F610628773DC200242491 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				E420A20C27F5C3AD0002CA74 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		E43F610728773DE300242491 /* Application */ = {
+			isa = PBXGroup;
+			children = (
+				E420A23F27F76CAA0002CA74 /* Common */,
+				E420A20327F5C3A90002CA74 /* AppDelegate.swift */,
+				E420A21127F5C3AD0002CA74 /* Info.plist */,
+			);
+			path = Application;
+			sourceTree = "<group>";
+		};
+		E43F610E28773F0300242491 /* Presenter */ = {
+			isa = PBXGroup;
+			children = (
+				E43F610A28773EC000242491 /* SplashPresenter.swift */,
+				E43F610C28773EDF00242491 /* SplashAnimator.swift */,
+			);
+			path = Presenter;
+			sourceTree = "<group>";
+		};
+		E43F610F28773F0B00242491 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				E420A20E27F5C3AD0002CA74 /* LaunchScreen.storyboard */,
+				E43F610828773E8F00242491 /* SplashViewController.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		E46DDA2727F871BF0078E4FC /* View */ = {
@@ -391,6 +440,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E417F711280320E6001A436D /* RecipeAppCoreDataModel.xcdatamodeld in Sources */,
+				E43F610D28773EDF00242491 /* SplashAnimator.swift in Sources */,
 				E46DDA2D27F876480078E4FC /* RecipeRaw.swift in Sources */,
 				E46DDA2627F865AD0078E4FC /* RecipeTableCell.swift in Sources */,
 				E417F71F280329BD001A436D /* FavoriteRecipe+CoreDataClass.swift in Sources */,
@@ -401,6 +451,7 @@
 				E417F722280329BD001A436D /* Ingridients+CoreDataProperties.swift in Sources */,
 				E420A22C27F6F9E90002CA74 /* ImageLoader.swift in Sources */,
 				E420A22427F5CCDF0002CA74 /* NetworkCore.swift in Sources */,
+				E43F610B28773EC000242491 /* SplashPresenter.swift in Sources */,
 				E46DDA8E2801FCFA0078E4FC /* RecipeInfoPresenter.swift in Sources */,
 				E417F6EB2802FEE9001A436D /* IngredientsModel.swift in Sources */,
 				E46DDA3127F8C0BC0078E4FC /* RecipeViewModel.swift in Sources */,
@@ -411,6 +462,7 @@
 				E417F72628032AC7001A436D /* FavoritesTableViewCell.swift in Sources */,
 				E420A21827F5C4BC0002CA74 /* TabBarController.swift in Sources */,
 				E46DDA8A2801F9DD0078E4FC /* RecipeInfoResponse.swift in Sources */,
+				E43F610928773E8F00242491 /* SplashViewController.swift in Sources */,
 				E417F720280329BD001A436D /* FavoriteRecipe+CoreDataProperties.swift in Sources */,
 				E420A21A27F5C91C0002CA74 /* FavoritesViewController.swift in Sources */,
 				E46DDA8C2801FAF90078E4FC /* RecipeAnalyzedInstructionsRaw.swift in Sources */,
@@ -562,7 +614,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7752T724HD;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RecipesApp/Info.plist;
+				INFOPLIST_FILE = RecipesApp/Application/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -577,7 +629,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -590,7 +642,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 7752T724HD;
 				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = RecipesApp/Info.plist;
+				INFOPLIST_FILE = RecipesApp/Application/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
@@ -605,7 +657,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

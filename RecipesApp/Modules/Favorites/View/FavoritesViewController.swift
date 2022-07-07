@@ -28,7 +28,6 @@ final class FavoritesViewController: UIViewController {
         super.viewDidLoad()
         configureNavigationBar()
         configureTableView()
-        presenter?.loadRecipe()
     }
     
     override func viewWillAppear(_ animated: Bool) {
