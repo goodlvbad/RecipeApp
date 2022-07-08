@@ -11,6 +11,8 @@ import UIKit
 final class RecipeTableCell: UITableViewCell {
     
     var callbackForMoreButton: (() -> Void)?
+    
+    private let cornerRadius: CGFloat = 18
 
     private lazy var recipeTitle: UILabel = {
         let label = UILabel()
@@ -22,6 +24,10 @@ final class RecipeTableCell: UITableViewCell {
     
     private lazy var recipeImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.layer.backgroundColor = UIColor.clear.cgColor
+        imageView.layer.cornerRadius = cornerRadius
+        imageView.clipsToBounds = true
+        imageView.contentMode = .center
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -47,6 +53,7 @@ final class RecipeTableCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
+        backgroundColor = .clear
         configureCell()
     }
     
@@ -62,6 +69,7 @@ final class RecipeTableCell: UITableViewCell {
 
 extension RecipeTableCell {
     private func configureCell() {
+        contentView.backgroundColor = .clear
         contentView.addSubviews([
             recipeImageView,
             recipeTitle,

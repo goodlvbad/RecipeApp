@@ -10,6 +10,8 @@ import UIKit
 
 final class FavoritesTableViewCell: UITableViewCell {
 
+    private let cornerRadius: CGFloat = 18
+    
     private lazy var recipeTitle: UILabel = {
         let label = UILabel()
         label.font = .systemFont(ofSize: 20, weight: .bold)
@@ -20,6 +22,10 @@ final class FavoritesTableViewCell: UITableViewCell {
     
     private lazy var recipeImageView: UIImageView = {
         let imageView = UIImageView()
+        imageView.layer.backgroundColor = UIColor.clear.cgColor
+        imageView.layer.cornerRadius = cornerRadius
+        imageView.clipsToBounds = true
+        imageView.contentMode = .center
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -33,6 +39,7 @@ final class FavoritesTableViewCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         selectionStyle = .none
+        backgroundColor = .clear
         setupView()
     }
     
@@ -51,7 +58,7 @@ final class FavoritesTableViewCell: UITableViewCell {
 
 extension FavoritesTableViewCell {
     private func setupView() {
-        contentView.backgroundColor = .systemBackground
+        contentView.backgroundColor = .clear
         contentView.addSubviews([
             recipeTitle,
             recipeImageView,

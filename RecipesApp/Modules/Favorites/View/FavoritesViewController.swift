@@ -20,6 +20,8 @@ final class FavoritesViewController: UIViewController {
         tableView.delegate = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(FavoritesTableViewCell.self, forCellReuseIdentifier: cellId)
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -39,13 +41,17 @@ final class FavoritesViewController: UIViewController {
 extension FavoritesViewController {
     private func configureNavigationBar() {
         let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
+        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = .systemBackground
         navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
+        navigationController?.navigationBar.prefersLargeTitles = true
         navigationItem.title = "Favorites"
     }
     
     private func configureTableView() {
+        view.backgroundColor = .secondarySystemBackground
         view.addSubview(recipeTableView)
 
         NSLayoutConstraint.activate([

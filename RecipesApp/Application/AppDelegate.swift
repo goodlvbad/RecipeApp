@@ -21,7 +21,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         splashPresenter?.present()
-        let delay: TimeInterval = 1.1
+        let delay: TimeInterval = 3
         DispatchQueue.main.asyncAfter(deadline: .now() + delay) {
             self.splashPresenter?.dismiss { [weak self] in
                 self?.splashPresenter = nil

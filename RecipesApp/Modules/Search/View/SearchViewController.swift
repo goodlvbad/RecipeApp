@@ -27,6 +27,8 @@ final class SearchViewController: UIViewController {
         tableView.delegate = self
         tableView.rowHeight = UITableView.automaticDimension
         tableView.register(RecipeTableCell.self, forCellReuseIdentifier: cellId)
+        tableView.backgroundColor = .clear
+        tableView.separatorStyle = .none
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
     }()
@@ -49,13 +51,16 @@ final class SearchViewController: UIViewController {
 extension SearchViewController {
     private func configureNavigationBar() {
         let appearance = UINavigationBarAppearance()
-        appearance.configureWithOpaqueBackground()
+        appearance.configureWithTransparentBackground()
+        appearance.backgroundColor = .secondarySystemBackground
         navigationController?.navigationBar.standardAppearance = appearance
+        navigationController?.navigationBar.compactAppearance = appearance
         navigationController?.navigationBar.scrollEdgeAppearance = appearance
         navigationItem.titleView = searchBar
     }
     
     private func configureTableView() {
+        view.backgroundColor = .secondarySystemBackground
         view.addSubview(recipeTableView)
         recipeTableView.addSubview(activityIndicator)
         
